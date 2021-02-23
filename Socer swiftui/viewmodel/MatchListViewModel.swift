@@ -12,6 +12,8 @@ class MatchListViewModel: ObservableObject {
     @Published var error: Error?
     @Published var isLoading: Bool = false
     
+    @Published var notFoundData = true
+    
     var service = FootballDataService.shared
     
 }

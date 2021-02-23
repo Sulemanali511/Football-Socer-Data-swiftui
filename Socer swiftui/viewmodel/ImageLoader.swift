@@ -12,6 +12,9 @@ class ImageLoader: ObservableObject {
     
     private static let imageCache = NSCache<AnyObject, AnyObject>()
     
+    @Published var notFoundData = true
+    @Published var isLoading = false
+    
     @Published var image: UIImage? = nil
     
     init(teamId: Int? = nil) {

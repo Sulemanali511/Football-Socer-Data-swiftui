@@ -23,7 +23,7 @@ struct Home: View {
                 Text(competition.name)
                     .onTapGesture {
                         self.selectedCompetition = competition
-                }
+                    }
                 
             }
         }.sheet(item: self.$selectedCompetition, onDismiss: {
@@ -31,7 +31,7 @@ struct Home: View {
         }, content: { (competition) in
             MainView(competition: competition)
         })
-            .navigationBarTitle("Competitions")
+        .navigationBarTitle("Competitions")
     }
 }
 

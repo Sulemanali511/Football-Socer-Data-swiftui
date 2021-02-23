@@ -9,9 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        NavigationView{
-        Home()
-        }
+        MainView(competition: Competition(id: 2021, name: "English Premier League"))
+//        NavigationView{
+//        Home()
+//        }
     }
 }
 

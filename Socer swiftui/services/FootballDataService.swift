@@ -41,6 +41,13 @@ struct FootballDataService {
         }
     }
     
+    func fetchTeamDetail(teamId: Int, completion: @escaping(Result<Team, Error>) -> ()) {
+        let url = baseURL + "/teams/\(teamId)"
+        let urlRequest = URLRequest(url: URL(string: url)!)
+        
+        fetchData(request: urlRequest, completion: completion)
+    }
+    
     func fetchData<D: Decodable>(request: URLRequest, completion: @escaping(Result<D, Error>) -> ()) {
         var urlRequest = request
         urlRequest.addValue(apiKey, forHTTPHeaderField: "X-Auth-Token")
@@ -66,4 +73,6 @@ struct FootballDataService {
             }
         }.resume()
     }
+    
+    
 }
