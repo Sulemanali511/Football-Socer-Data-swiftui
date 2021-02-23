@@ -11,63 +11,52 @@ import SDWebImageSwiftUI
 struct StandingTeamRow: View {
     
     var teamStanding: TeamStandingTable
-    @StateObject var imageLoader = ImageLoader()
-    
-    //    init(teamStanding: TeamStandingTable) {
-    //        self.teamStanding = teamStanding
-    //        guard let crestText = self.teamStanding.team.crestUrl, let crestURL = URL(string: crestText) else {
-    //            return
-    //        }
-    //        self.imageLoader.downloadImage(url: crestURL, teamId: teamStanding.team.id)
-    //    }
+//    @StateObject var imageLoader = ImageLoader()
     
     var body: some View {
-        ZStack {
-            HStack() {
-                if Utilities.isRunningOnIpad {
-                    Text(self.positionText(with: teamStanding.position))
-                    
-                    if (imageLoader.image != nil) {
-                        Image(uiImage: imageLoader.image!)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25)
-                    } else {
-                        RoundedRectangle(cornerRadius: 12.5)
-                            .foregroundColor(.gray)
-                            .frame(width: 25, height: 25)
-                    }
-                    
+        //        ZStack {
+        HStack() {
+            if Utilities.isRunningOnIpad {
+                Text(self.positionText(with: teamStanding.position))
+                
+                if (teamStanding.team.crestUrl != nil) {
+                    WebView(urlString: teamStanding.team.crestUrl!)
+                        .frame(width: 30,height: 30)
+                        .clipShape(Circle())
                 } else {
-                    Text(self.positionText(with: teamStanding.position))
-                    
-                    //                    if (imageLoader.image != nil) {
-                    if teamStanding.team.crestUrl != nil {
-                        
-                        
-                        WebView(urlString: teamStanding.team.crestUrl!)
-                            .frame(width: 30,height: 30)
-                            .clipShape(Circle())
-                    } else {
-                        RoundedRectangle(cornerRadius: 7.5)
-                            .foregroundColor(.gray)
-                            .frame(width: 15, height: 15)
-                    }
-                    
-                    Text(teamStanding.team.shortName ?? teamStanding.team.name)
-                        .multilineTextAlignment(.leading)
+                    RoundedRectangle(cornerRadius: 12.5)
+                        .foregroundColor(.gray)
+                        .frame(width: 25, height: 25)
                 }
                 
+            } else {
+                Text(self.positionText(with: teamStanding.position))
                 
-                Spacer()
-                Text(self.pointRepresentationRowText(with: teamStanding))
-                    .frame(width: 210)
-                    .multilineTextAlignment(.trailing)
+                //                    if (imageLoader.image != nil) {
+                if teamStanding.team.crestUrl != nil {
+                    
+                    
+                    WebView(urlString: teamStanding.team.crestUrl!)
+                        .frame(width: 30,height: 30)
+                        .clipShape(Circle())
+                } else {
+                    RoundedRectangle(cornerRadius: 7.5)
+                        .foregroundColor(.gray)
+                        .frame(width: 15, height: 15)
+                }
+                
+                Text(teamStanding.team.shortName ?? teamStanding.team.name)
+                    .multilineTextAlignment(.leading)
             }
-            NavigationLink(destination: TeamDetailView(teamToFetch: teamStanding.team)) {
-                EmptyView()
-            }
+            
+            
+            Spacer()
+            Text(self.pointRepresentationRowText(with: teamStanding))
+                .frame(width: 210)
+                .multilineTextAlignment(.trailing)
         }
+        
+        //        }
         
     }
     

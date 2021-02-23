@@ -10,8 +10,13 @@ import SwiftUI
 struct TeamSquadView: View {
     
     let players: [Player]
+    @Binding var show:Bool
+    @Binding var playerss:Player //= Player(id: 1, name: "Cristiano Ronaldo", firstName: "CR7", dateOfBirth: "1999-11-12", countryOfBirth: "Portugal", nationality: "Portugal", position: "Attacker", shirtNumber: 7)
     
     var body: some View {
+        
+//        ZStack {
+        
         Section(header: Text("Squads")) {
             ForEach(players) { player in
                 ZStack {
@@ -27,12 +32,23 @@ struct TeamSquadView: View {
                         
                     }
                     
-                    NavigationLink(destination: PlayerDetailView(player: player)) {
-                        EmptyView()
-                        
-                    }
+//                    NavigationLink(destination: PlayerDetailView(player: player)) {
+//                        EmptyView()
+//                        
+//                    }
+                }
+                .onTapGesture {
+                    self.show.toggle()
+                    self.playerss=player
                 }
             }
         }
+         
+//            if show {
+//
+//                PlayerDetailView(player: playerss)
+//                    .transition(.move(edge: .bottom))
+//            }
+//        }
     }
 }

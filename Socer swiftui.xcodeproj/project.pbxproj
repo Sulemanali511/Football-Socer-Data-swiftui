@@ -94,6 +94,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E02BD8C25E4E76D005305AD /* team info */ = {
+			isa = PBXGroup;
+			children = (
+				4E8D031D25E403C7006AE321 /* TeamHeaderView.swift */,
+				4E8D032025E403EE006AE321 /* ClubInformationView.swift */,
+				4E8D032325E4040C006AE321 /* LeftRightRow.swift */,
+			);
+			path = "team info";
+			sourceTree = "<group>";
+		};
 		4E36EDFB25E4C5CA00564731 /* custom */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,9 +257,7 @@
 		4E8D032625E40426006AE321 /* detail */ = {
 			isa = PBXGroup;
 			children = (
-				4E8D031D25E403C7006AE321 /* TeamHeaderView.swift */,
-				4E8D032025E403EE006AE321 /* ClubInformationView.swift */,
-				4E8D032325E4040C006AE321 /* LeftRightRow.swift */,
+				4E02BD8C25E4E76D005305AD /* team info */,
 				4E8D032B25E4046A006AE321 /* teamSqad */,
 			);
 			path = detail;

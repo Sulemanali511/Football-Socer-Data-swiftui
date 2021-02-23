@@ -12,7 +12,7 @@ struct StandingView: View {
     @StateObject var standingViewModel = StandingViewModel()
     var columns = Array(repeating: GridItem(.flexible(), spacing: 60), count: 1)
     var top = UIApplication.shared.windows.first?.safeAreaInsets.top
-
+    
     var body: some View {
         
         VStack{
@@ -32,70 +32,73 @@ struct StandingView: View {
                 })
                 
             }
-//            .padding(.top,top)
+            //            .padding(.top,top)
             .padding(.bottom,10)
             .padding(.horizontal)
-//            .padding(.top,UIApplication.shared.delegate.sa)
+            //            .padding(.top,UIApplication.shared.delegate.sa)
             
             
+            
+            VStack(spacing: 8) {
                 
-                VStack(spacing: 8) {
-                    
-                    Text(competition.name)
+                Text(competition.name)
+                    .font(.headline)
+                
+                Divider()
+                
+                HStack {
+                    Text("Club")
                         .font(.headline)
                     
-                    Divider()
-                    
-                    HStack {
-                        Text("Club")
-                            .font(.headline)
-                        
-                        Spacer()
-                        
-                        Text(self.headerText())
-                            .font(.headline)
-                            .multilineTextAlignment(.trailing)
-                    }
-                    
-                }
-                .padding()
-                .background(Color.gray)
-               
-                if standingViewModel.notFoundData {
-                    Text("No search artist done before!")
-                        .fontWeight(.semibold)
-                        .font(.system(size: 18))
-                        .padding(.top,55)
-
                     Spacer()
-                } else
-
-                if standingViewModel.table.isEmpty{
-
-                    // loading View...
-                    ProgressView()
-                        .padding(.top,55)
-
-                    Spacer()
-                }
-
-                else {
                     
-                    ScrollView(.vertical, showsIndicators: false) {
-                        
-                        LazyVGrid(columns: columns,spacing: 20){
-
-                            ForEach(self.standingViewModel.table) { (teamStanding) in
-                                StandingTeamRow(teamStanding: teamStanding)
-                            }
-                            .padding()
-                        }
-                    }
-                    
-                    
+                    Text(self.headerText())
+                        .font(.headline)
+                        .multilineTextAlignment(.trailing)
                 }
                 
-                Spacer(minLength: 0)
+            }
+            .padding()
+            .background(Color.gray)
+            
+            if standingViewModel.notFoundData {
+                Text("No search artist done before!")
+                    .fontWeight(.semibold)
+                    .font(.system(size: 18))
+                    .padding(.top,55)
+                
+                Spacer()
+            } else
+            
+            if standingViewModel.table.isEmpty{
+                
+                // loading View...
+                ProgressView()
+                    .padding(.top,55)
+                
+                Spacer()
+            }
+            
+            else {
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    
+                    LazyVGrid(columns: columns,spacing: 20){
+                        
+                        ForEach(self.standingViewModel.table) { (teamStanding) in
+                            NavigationLink(destination: TeamDetailView(teamToFetch: teamStanding.team)) {
+                                StandingTeamRow(teamStanding: teamStanding)
+                            }
+                            
+                        }
+                        .padding()
+                    }
+                }
+                
+                
+            }
+            
+            Spacer(minLength: 0)
         }
         .onAppear(perform: {
             self.standingViewModel.fetchLatestStanding(competitionId: self.competition.id)

@@ -16,11 +16,11 @@ struct TeamHeaderView: View {
         HStack {
             Spacer()
             VStack {
-                if imageLoader.image != nil {
-                    Image(uiImage: imageLoader.image!)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 240)
+                if team.crestUrl != nil {
+                    
+                    
+                    WebView(urlString: team.crestUrl!)
+                        .frame(width:90,height: 90)
                 }
                 else {
                     RoundedRectangle(cornerRadius: 120)
@@ -35,11 +35,11 @@ struct TeamHeaderView: View {
             Spacer()
         }
         .padding(.vertical)
-        .onAppear {
-            guard let crest = self.team.crestUrl, let crestURL = URL(string: crest) else {
-                return
-            }
-            self.imageLoader.downloadImage(url: crestURL, teamId: self.team.id)
-        }
+//        .onAppear {
+//            guard let crest = self.team.crestUrl, let crestURL = URL(string: crest) else {
+//                return
+//            }
+//            self.imageLoader.downloadImage(url: crestURL, teamId: self.team.id)
+//        }
     }
 }

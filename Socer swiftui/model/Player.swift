@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Player: Identifiable, Decodable, Equatable {
     
-    var id: Int?
+    var id: Int
     var name: String
     var firstName: String?
     var dateOfBirth: String?
