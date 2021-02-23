@@ -35,11 +35,11 @@ struct TeamHeaderView: View {
             Spacer()
         }
         .padding(.vertical)
-//        .onAppear {
-//            guard let crest = self.team.crestUrl, let crestURL = URL(string: crest) else {
-//                return
-//            }
-//            self.imageLoader.downloadImage(url: crestURL, teamId: self.team.id)
-//        }
+        .onAppear {
+            guard let crest = self.team.crestUrl else {
+                return
+            }
+            self.imageLoader.downloadImage(url: crest, teamId: self.team.id)
+        }
     }
 }

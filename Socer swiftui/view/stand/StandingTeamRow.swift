@@ -12,6 +12,16 @@ struct StandingTeamRow: View {
     
     var teamStanding: TeamStandingTable
 //    @StateObject var imageLoader = ImageLoader()
+//    @ObservedObject var imageLoader: ImageLoader
+    
+    init(teamStanding: TeamStandingTable) {
+        
+        self.teamStanding = teamStanding
+        guard let crestText = self.teamStanding.team.crestUrl else {
+            return
+        }
+        UserDefaults.save(key: teamStanding.team.id, value: crestText)
+    }
     
     var body: some View {
         //        ZStack {

@@ -34,13 +34,6 @@ struct PlayerDetailView: View {
                 Spacer()
                 
             }
-            //            .padding(.top,top)
-            
-            
-            
-            
-            
-            
             
             List {
                 LeftRightRow(title: "Full Name", subtitle: player.name)
@@ -71,6 +64,5 @@ struct PlayerDetailView: View {
         .padding()
         .navigationBarHidden(true)
         .navigationBarTitle("")
-        //        .navigationBarTitle(player.name)
     }
 }

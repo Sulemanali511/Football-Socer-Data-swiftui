@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct Socer_swiftuiApp: App {
+    var ss = ImageLoader()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(ss)
         }
     }
 }

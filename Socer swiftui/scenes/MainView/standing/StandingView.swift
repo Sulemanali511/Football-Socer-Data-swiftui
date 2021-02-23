@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StandingView: View {
+    
     let competition: Competition
     @StateObject var standingViewModel = StandingViewModel()
     var columns = Array(repeating: GridItem(.flexible(), spacing: 60), count: 1)

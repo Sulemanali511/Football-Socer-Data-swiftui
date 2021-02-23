@@ -8,6 +8,19 @@
 import SwiftUI
 import SVGKit
 
+extension UserDefaults {
+    
+    static func save (key:Int,value:String) {
+        UserDefaults.standard.set(value, forKey: "\(key)")
+    }
+    
+    static func get (key:Int) ->String {
+        guard let ss = UserDefaults.standard.value(forKey: "\(key)") as? String else { return "" }
+        
+        return ss
+    }
+    
+}
 class ImageLoader: ObservableObject {
     
     private static let imageCache = NSCache<AnyObject, AnyObject>()
@@ -17,7 +30,17 @@ class ImageLoader: ObservableObject {
     
     @Published var image: UIImage? = nil
     
+    @Published var imageUrl:String? = nil
+    
     init(teamId: Int? = nil) {
+        if let imageFromCache = ImageLoader.imageCache.object(forKey: teamId as AnyObject) as? String {
+            
+            self.imageUrl = imageFromCache
+            return
+        }
+    }
+    
+    func getTeamId(teamId: Int? = nil)  {
         if let imageFromCache = ImageLoader.imageCache.object(forKey: teamId as AnyObject) as? UIImage {
             self.image = imageFromCache
             return
@@ -25,32 +48,12 @@ class ImageLoader: ObservableObject {
     }
     
     
-    public func downloadImage(url: URL, teamId: Int) {
-        if let imageFromCache = ImageLoader.imageCache.object(forKey: teamId as AnyObject) as? UIImage {
-            self.image = imageFromCache
+    public func downloadImage(url: String, teamId: Int) {
+        if let imageFromCache = ImageLoader.imageCache.object(forKey: teamId as AnyObject) as? String {
+            self.imageUrl = imageFromCache
             return
         }
         
-    
-        URLSession.shared.dataTask(with: url) { (data, res, error) in
-            guard let data = data else {
-                return
-            }
-            
-            var image: UIImage?
-            if url.absoluteString.hasSuffix("svg") {
-                image = SVGKImage(data: data)?.uiImage
-            } else {
-                image = UIImage(data: data)
-            }
-            
-            guard let finalImage = image else { return }
-            
-            DispatchQueue.main.async { [weak self] in
-                ImageLoader.imageCache.setObject(finalImage, forKey: teamId  as AnyObject)
-                self?.image = image
-            }
-        }.resume()
     }
 }
 

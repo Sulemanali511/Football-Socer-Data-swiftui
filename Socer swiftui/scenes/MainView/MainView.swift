@@ -14,6 +14,8 @@ struct MainView: View {
     var body: some View {
         TabView {
             NavigationView {
+//                MatchListView(competition: competition, type: .latest)
+//                    .navigationBarTitle("Latest")
                 StandingView(competition: self.competition)
                     
             }

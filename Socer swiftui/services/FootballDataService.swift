@@ -22,6 +22,52 @@ struct FootballDataService {
     
     private init() {}
     
+    static private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+    
+    private func startEndDateFilter(isUpcoming: Bool) -> (String, String) {
+        let today = Date()
+        let tenDays = today.addingTimeInterval(86400 * (isUpcoming ? 10 : -10))
+        
+        let todayText = FootballDataService.dateFormatter.string(from: today)
+        let tenDaysText = FootballDataService.dateFormatter.string(from: tenDays)
+        return isUpcoming ? (todayText, tenDaysText) : (tenDaysText, todayText)
+    }
+    
+    func fetchUpcomingMatches(competitionId: Int, completion: @escaping(Result<[Match], Error>) -> ()) {
+        let (tenDaysAgoText, todayText) = startEndDateFilter(isUpcoming: true)
+        
+        let url = baseURL + "/matches?status=SCHEDULED&competitions=\(competitionId)&dateFrom=\(tenDaysAgoText)&dateTo=\(todayText)"
+        let urlRequest = URLRequest(url: URL(string: url)!)
+
+        fetchData(request: urlRequest) { (result: Result<MatchResponse, Error>) in
+            switch result {
+            case .success(let response):
+                completion(.success(response.matches))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func fetchLatestMatches(competitionId: Int, completion: @escaping(Result<[Match], Error>) -> ()) {
+        let (tenDaysAgoText, todayText) = startEndDateFilter(isUpcoming: false)
+        
+        let url = baseURL + "/matches?status=FINISHED&competitions=\(competitionId)&dateFrom=\(tenDaysAgoText)&dateTo=\(todayText)"
+        let urlRequest = URLRequest(url: URL(string: url)!)
+        fetchData(request: urlRequest) { (result: Result<MatchResponse, Error>) in
+            switch result {
+            case .success(let response):
+                completion(.success(response.matches))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func fetchLatestStandings(competitionId: Int, completion: @escaping(Result<[TeamStandingTable], Error>) -> ()) {
         let url = baseURL + "/competitions/\(competitionId)/standings"
         let urlRequest = URLRequest(url: URL(string: url)!)
