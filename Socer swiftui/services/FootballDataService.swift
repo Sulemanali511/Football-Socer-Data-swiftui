@@ -94,6 +94,20 @@ struct FootballDataService {
         fetchData(request: urlRequest, completion: completion)
     }
     
+    func fetchMatchDetail(matchId: Int, completion: @escaping(Result<MatchDetail, Error>) -> ()) {
+        let url = baseURL + "/matches/\(matchId)"
+        let urlRequest = URLRequest(url: URL(string: url)!)
+        
+        fetchData(request: urlRequest) { (result: Result<MatchDetailResponse, Error>) in
+            switch result {
+            case .success(let response):
+                completion(.success(response.match))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func fetchData<D: Decodable>(request: URLRequest, completion: @escaping(Result<D, Error>) -> ()) {
         var urlRequest = request
         urlRequest.addValue(apiKey, forHTTPHeaderField: "X-Auth-Token")

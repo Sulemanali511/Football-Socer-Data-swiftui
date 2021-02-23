@@ -23,6 +23,17 @@ extension UserDefaults {
 }
 class ImageLoader: ObservableObject {
     
+    func checkHome(match:Match) ->String {
+        UserDefaults.get(key: match.homeTeam.id)
+    }
+    
+    func checkAway(match:Match) ->String {
+        UserDefaults.get(key: match.awayTeam.id)
+        
+    }
+    
+    
+    
     private static let imageCache = NSCache<AnyObject, AnyObject>()
     
     @Published var notFoundData = true

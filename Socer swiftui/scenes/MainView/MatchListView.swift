@@ -19,16 +19,18 @@ struct MatchListView: View {
     @StateObject var modelListViewModel = MatchListViewModel()
     
     var body: some View {
+        
         List(self.modelListViewModel.matches) {
             MatchListRow(match: $0)
+            
         }
-    .onAppear {
-        switch self.type {
-        case .latest:
-            self.modelListViewModel.fetchLatestMatches(competitionId: self.competition.id)
-        case .upcoming:
-            self.modelListViewModel.fetchUpcomingMatches(competitionId: self.competition.id)
+        .onAppear {
+            switch self.type {
+            case .latest:
+                self.modelListViewModel.fetchLatestMatches(competitionId: self.competition.id)
+            case .upcoming:
+                self.modelListViewModel.fetchUpcomingMatches(competitionId: self.competition.id)
+            }
         }
-    }
     }
 }

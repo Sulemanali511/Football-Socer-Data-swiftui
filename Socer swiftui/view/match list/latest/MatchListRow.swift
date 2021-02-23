@@ -21,7 +21,6 @@ struct MatchListRow: View {
     @EnvironmentObject var awayImageLoader: ImageLoader
     
     
-    
     var body: some View {
         ZStack {
             HStack {
@@ -78,26 +77,21 @@ struct MatchListRow: View {
                     Text(MatchListRow.dateFormatter.string(from: match.utcDate))
                         .font(.headline)
                 }
-        
+                
             }
             .padding(.vertical)
             
-//            NavigationLink(destination: MatchDetailView(matchToFetch: match)) {
-//                EmptyView()
-//            }
-        }
-        .onAppear {
-//            homeImageLoader.getTeamId(teamId: match.homeTeam.id)
-//            awayImageLoader.getTeamId(teamId: match.homeTeam.id)
-//            self.homeImageLoader = ImageLoader(teamId: match.homeTeam.id)
-//            self.awayImageLoader = ImageLoader(teamId: match.awayTeam.id)
+            NavigationLink(destination: MatchDetailView(matchToFetch: match)) {
+                EmptyView()
+            }
         }
         
-    
+        
+        
     }
     
     func checkHome() ->String {
-         UserDefaults.get(key: match.homeTeam.id)
+        UserDefaults.get(key: match.homeTeam.id)
     }
     
     func checkAway() ->String {
